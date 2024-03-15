@@ -1,0 +1,77 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "accounts_mdc_openai_resource_name": {
+            "defaultValue": "devops-security-openai",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2023-10-01-preview",
+            "name": "[parameters('accounts_mdc_openai_resource_name')]",
+            "location": "eastus",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "OpenAI",
+            "tags": {
+                "mapping_tag": "a5f99165-da8e-4476-878d-84f7503afeba"
+            },
+            "properties": {
+                "customSubDomainName": "[parameters('accounts_mdc_openai_resource_name')]",
+                "networkAcls": {
+                    "defaultAction": "Allow",
+                    "virtualNetworkRules": [],
+                    "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2023-10-01-preview",
+            "name": "[concat(parameters('accounts_mdc_openai_resource_name'), '/demogpt35deployment')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_mdc_openai_resource_name'))]"
+            ],
+            "sku": {
+                "name": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "model": {
+                    "format": "OpenAI",
+                    "name": "gpt-35-turbo-16k",
+                    "version": "0613"
+                },
+                "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+                "currentCapacity": 1
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2023-10-01-preview",
+            "name": "[concat(parameters('accounts_mdc_openai_resource_name'), '/gpt-35-turbo-deployment')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_mdc_openai_resource_name'))]"
+            ],
+            "sku": {
+                "name": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "model": {
+                    "format": "OpenAI",
+                    "name": "gpt-35-turbo",
+                    "version": "0613"
+                },
+                "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+                "currentCapacity": 1
+			}
+        }
+    ]
+}
