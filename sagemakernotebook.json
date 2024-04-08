@@ -1,0 +1,19 @@
+{
+  "Resources": {
+    "SageMakerNotebookInstance": {
+      "Type": "AWS::SageMaker::NotebookInstance",
+      "Properties": {
+        "InstanceType": "ml.t2.medium",
+        "RoleArn": "arn:aws:iam::123456789012:role/SageMakerRole",
+        "NotebookInstanceName": "MySageMakerNotebookInstance",
+        "DirectInternetAccess": "Enabled",
+        "Tags": [
+                {
+                 "Key": "Name",
+                 "Value": "MySageMakerInstance"
+                }
+            ]      
+        }
+    }
+  }
+}
