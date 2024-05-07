@@ -17,7 +17,7 @@
   </a>
 </h4>
 
-This repository contains a collection of apps powered by LangChain. 
+This repository contains a collection of apps powered by LangChain. Test
 
 [LangChain](https://langchain.readthedocs.io/en/latest) is an open-source framework created to aid the development of applications leveraging the power of large language models (LLMs). It can be used for chatbots, text summarisation, data generation, code understanding, question answering, evaluation, and more.
 
